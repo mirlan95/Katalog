@@ -40,6 +40,28 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
         view = inflater.inflate(R.layout.item_cateogry, parent, false);
         final ViewHolder holder = new ViewHolder(view);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int adapterPos = holder.getAdapterPosition();
+                if(adapterPos != RecyclerView.NO_POSITION){
+                    Log.d(TAG, "click " + list.get(adapterPos).getTitle());
+                }
+            }
+        });
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                int adapterPos = holder.getAdapterPosition();
+                if(adapterPos != RecyclerView.NO_POSITION){
+                    Log.d(TAG, "long " + list.get(adapterPos).getTitle());
+                    return true;
+                }
+                return false;
+            }
+        });
         Log.d(TAG, "onCreateViewHolde listSize " + list.size());
         return holder;
     }
@@ -55,6 +77,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public int getItemCount() {
         return this.list.size();
     }
+
+
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -73,7 +97,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         public  void setData(String category, int position){
             this.category.setText(category);
             Log.d(TAG, "setData " + category);
-            this.position.setText((position+1) + "");
+            this.position.setText((position + 1) + "");
         }
     }
 
