@@ -1,6 +1,6 @@
 package com.example.chen.catalogmag.s.api;
 
-import com.example.chen.catalogmag.s.Constants;
+import com.example.chen.catalogmag.s.utils.Constants;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

@@ -1,4 +1,4 @@
-package com.example.chen.catalogmag.s;
+package com.example.chen.catalogmag.s.utils;
 
 /**
  * Created by chen on 04.04.16.

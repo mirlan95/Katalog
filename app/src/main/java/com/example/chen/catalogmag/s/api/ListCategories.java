@@ -1,4 +1,4 @@
-package com.example.chen.catalogmag.s.model;
+package com.example.chen.catalogmag.s.api;
 
 import android.util.Log;
 
