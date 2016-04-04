@@ -1,6 +1,7 @@
 package com.example.chen.catalogmag.s.api;
 
 import com.example.chen.catalogmag.s.model.Category;
+import com.example.chen.catalogmag.s.model.ListCategories;
 
 import java.util.List;
 
