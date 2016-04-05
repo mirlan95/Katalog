@@ -14,4 +14,11 @@
     <string name="title_itemacitivty_list">Items</string>
     <string name="title_itemacitivty_detail">ItemAcitivty Detail</string>
     <string name="item">Товары</string>
+    <string name="title_goods">Товары</string>
+
+
+    <string-array name="mag_arra">
+        <item>Item</item>
+        <item>Categories</item>
+    </string-array>
 </resources>

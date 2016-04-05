@@ -1,6 +1,7 @@
 package com.example.chen.catalogmag.s.api;
 
 import com.example.chen.catalogmag.s.model.Category;
+import com.example.chen.catalogmag.s.model.Element;
 
 import java.util.List;
 
@@ -15,6 +16,9 @@ public interface Api {
     @GET("/categories.json?format=json")
     Call<ListCategories> getCategories();
 
-    @GET("/categories.json?format=json")
-    Call<List<Category>> getCategoriesSimple();
+    @GET("/products.json?format=json")
+    Call<ListItems> getItems();
+
+    @GET("/products.json?format=json")
+    Call<Element> getElements();
 }

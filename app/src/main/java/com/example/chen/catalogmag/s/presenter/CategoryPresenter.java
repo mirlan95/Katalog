@@ -1,12 +1,9 @@
 package com.example.chen.catalogmag.s.presenter;
 
-import android.content.Context;
-
-import com.example.chen.catalogmag.s.model.CategoriesInterator;
+import com.example.chen.catalogmag.s.model.CategoriesInteractor;
 import com.example.chen.catalogmag.s.model.Category;
 import com.example.chen.catalogmag.s.view.CategoryActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,12 +12,12 @@ import java.util.List;
 public class CategoryPresenter extends Presenter {
 
     CategoryActivity context;
-    CategoriesInterator categoriesInterator;
+    CategoriesInteractor categoriesInterator;
 
 
     public CategoryPresenter(CategoryActivity context) {
         this.context = context;
-        categoriesInterator = new CategoriesInterator();
+        categoriesInterator = new CategoriesInteractor();
 
     }
 
