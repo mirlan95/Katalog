@@ -1,5 +1,8 @@
 package com.example.chen.catalogmag.s.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
@@ -8,7 +11,7 @@ import java.util.Date;
  * Created by chen on 04.04.16.
  */
 
-public class Category {
+public class Category implements Parcelable{
     private int id;
 
     private String title;
@@ -18,6 +21,11 @@ public class Category {
 
     @SerializedName("created_at")
     private Date createdAt;
+
+    protected Category(Parcel in) {
+        id = in.readInt();
+        title = in.readString();
+    }
 
     public int getId() {
         return id;
@@ -55,4 +63,29 @@ public class Category {
     public String toString() {
         return "ClassPojo [id = " + id + ", title = " + title + ", updatedAt = " + updatedAt + ", createdAt = " + createdAt + "]";
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(title);
+        dest.writeSerializable(createdAt);
+        dest.writeSerializable(updatedAt);
+    }
+
+    public static final Creator<Category> CREATOR = new Creator<Category>() {
+        @Override
+        public Category createFromParcel(Parcel in) {
+            return new Category(in);
+        }
+
+        @Override
+        public Category[] newArray(int size) {
+            return new Category[size];
+        }
+    };
 }

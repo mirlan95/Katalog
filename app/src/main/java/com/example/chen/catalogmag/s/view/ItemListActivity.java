@@ -14,16 +14,19 @@ import android.view.MenuItem;
 
 import com.example.chen.catalogmag.R;
 import com.example.chen.catalogmag.s.adapter.ItemAdapter;
+import com.example.chen.catalogmag.s.model.Category;
 import com.example.chen.catalogmag.s.model.Product;
 import com.example.chen.catalogmag.s.presenter.ItemPresenter;
+import com.example.chen.catalogmag.s.utils.Constants;
 import com.example.chen.catalogmag.s.utils.DividerItemDecoration;
+import com.example.chen.catalogmag.s.utils.ItemClickListener;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class ItemListActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class ItemListActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ItemClickListener {
 
     private static final String TAG = ItemListActivity.class.getSimpleName();
     @Bind(R.id.recycler_list)
@@ -44,8 +47,20 @@ public class ItemListActivity extends AppCompatActivity implements NavigationVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
-
+        getCategoryIntent();
         init();
+    }
+
+    private void getCategoryIntent() {
+        Bundle bundle = getIntent().getExtras();
+
+        if(bundle != null){
+            Category category = bundle.getParcelable(Constants.CATEGORY);
+            Log.d(TAG, " not null " + category.toString());
+        } else {
+            Log.d(TAG, "null ");
+        }
+
     }
 
     void init() {
@@ -66,13 +81,16 @@ public class ItemListActivity extends AppCompatActivity implements NavigationVie
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
         presenter = new ItemPresenter(this);
+        presenter.onStart();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        presenter.onStart();
+        Log.d(TAG, "onStart");
     }
+
+
 
     @Override
     protected void onDestroy() {
@@ -95,7 +113,7 @@ public class ItemListActivity extends AppCompatActivity implements NavigationVie
                 Log.d(TAG, "nav_shops");
                 break;
 
-            case R.id.nav_items:
+            case R.id.nav_start_items_activity:
                 Log.d(TAG, "nav_shops");
                 break;
 
@@ -107,9 +125,19 @@ public class ItemListActivity extends AppCompatActivity implements NavigationVie
     }
 
     public void onShow(List<Product> list) {
-        recyclerView.setAdapter(new ItemAdapter(list));
+        recyclerView.setAdapter(new ItemAdapter(list, this));
         for (int i = 0; i < list.size(); i++) {
-            Log.d(TAG, "onShow " + list.get(i).getTitle());
+            Log.d(TAG, "onShow " + list.get(i).toString());
         }
+    }
+
+    @Override
+    public void onCLickItem(Object object) {
+        Log.d(TAG, object.toString());
+    }
+
+    @Override
+    public void onLongClickItem(Object object) {
+        Log.d(TAG, object.toString());
     }
 }

@@ -29,4 +29,11 @@ public class Picture {
         this.url = url;
     }
 
+
+    @Override
+    public String toString() {
+        return "Picture{" +
+                "url=" + url +
+                '}';
+    }
 }

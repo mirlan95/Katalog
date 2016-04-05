@@ -5,6 +5,8 @@ package com.example.chen.catalogmag.s.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 public class Product {
 
     @SerializedName("id")
@@ -24,10 +26,10 @@ public class Product {
     private Integer categoryId;
     @SerializedName("created_at")
     @Expose
-    private String createdAt;
+    private Date createdAt;
     @SerializedName("updated_at")
     @Expose
-    private String updatedAt;
+    private Date updatedAt;
     @SerializedName("picture")
     @Expose
     private Picture picture;
@@ -127,7 +129,7 @@ public class Product {
      * @return
      *     The createdAt
      */
-    public String getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
@@ -136,7 +138,7 @@ public class Product {
      * @param createdAt
      *     The created_at
      */
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -145,7 +147,7 @@ public class Product {
      * @return
      *     The updatedAt
      */
-    public String getUpdatedAt() {
+    public Date getUpdatedAt() {
         return updatedAt;
     }
 
@@ -154,7 +156,7 @@ public class Product {
      * @param updatedAt
      *     The updated_at
      */
-    public void setUpdatedAt(String updatedAt) {
+    public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
 
@@ -176,4 +178,17 @@ public class Product {
         this.picture = picture;
     }
 
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", price='" + price + '\'' +
+                ", text='" + text + '\'' +
+                ", categoryId=" + categoryId +
+                ", createdAt='" + createdAt + '\'' +
+                ", updatedAt='" + updatedAt + '\'' +
+                ", picture=" + picture +
+                '}';
+    }
 }

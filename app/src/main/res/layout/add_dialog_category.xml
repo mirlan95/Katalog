@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/cateogry_dialog"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:scaleType="center"
+        android:background="#FFFFBB"
+        android:gravity="center"
+        android:textSize="@dimen/dialog_header"
+        android:text="@string/add_category"
+        />
+    <TextView
+        android:textSize="@dimen/dialog_text"
+        android:text="@string/new_category_title"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="@dimen/dialog_margin"
+        android:layout_marginBottom="@dimen/dialog_margin"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:singleLine="true"
+        android:id="@+id/new_category_value"
+        android:layout_width="match_parent"
+        android:maxLength="50"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

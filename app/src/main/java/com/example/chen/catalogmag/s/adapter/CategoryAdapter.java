@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.chen.catalogmag.R;
 import com.example.chen.catalogmag.s.model.Category;
+import com.example.chen.catalogmag.s.utils.ItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +27,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     private List<Category> list = new ArrayList();
     private LayoutInflater inflater;
     private View view;
+    ItemClickListener listener;
 
-    public CategoryAdapter(List<Category> list) {
+    public CategoryAdapter(List<Category> list, ItemClickListener listener) {
         this.list = list;
+        this.listener = listener;
     }
 
     @Override
@@ -44,8 +47,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 int adapterPos = holder.getAdapterPosition();
-                if(adapterPos != RecyclerView.NO_POSITION){
-                    Log.d(TAG, "click " + list.get(adapterPos).getTitle());
+                if (adapterPos != RecyclerView.NO_POSITION) {
+
+                    listener.onCLickItem(list.get(adapterPos));
                 }
             }
         });
@@ -55,21 +59,19 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             public boolean onLongClick(View v) {
 
                 int adapterPos = holder.getAdapterPosition();
-                if(adapterPos != RecyclerView.NO_POSITION){
-                    Log.d(TAG, "long " + list.get(adapterPos).getTitle());
+                if (adapterPos != RecyclerView.NO_POSITION) {
+                    listener.onLongClickItem(list.get(adapterPos));
                     return true;
                 }
                 return false;
             }
         });
-        Log.d(TAG, "onCreateViewHolde listSize " + list.size());
         return holder;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.setData(list.get(position).getTitle(), position);
-        Log.d(TAG, "onBindViewHolder listSize " + list.size());
     }
 
 
@@ -77,9 +79,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public int getItemCount() {
         return this.list.size();
     }
-
-
-
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -96,7 +95,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
         public  void setData(String category, int position){
             this.category.setText(category);
-            Log.d(TAG, "setData " + category);
             this.position.setText((position + 1) + "");
         }
     }

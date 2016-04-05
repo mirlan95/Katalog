@@ -15,6 +15,11 @@
     <string name="title_itemacitivty_detail">ItemAcitivty Detail</string>
     <string name="item">Товары</string>
     <string name="title_goods">Товары</string>
+    <string name="msg">message</string>
+    <string name="dialog_title">Category</string>
+    <string name="ok">ok</string>
+    <string name="cancel">cancel</string>
+    <string name="new_category_title">Введите название:</string>
 
 
     <string-array name="mag_arra">
