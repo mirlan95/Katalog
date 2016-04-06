@@ -7,6 +7,7 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -21,6 +22,7 @@ import com.example.chen.catalogmag.s.adapter.CategoryAdapter;
 import com.example.chen.catalogmag.s.model.Category;
 import com.example.chen.catalogmag.s.presenter.CategoryPresenter;
 import com.example.chen.catalogmag.s.utils.Constants;
+import com.example.chen.catalogmag.s.utils.DividerItemDecoration;
 
 import java.util.List;
 
@@ -48,6 +50,7 @@ public class CategoryActivity extends BaseActivity implements
         presenter = new CategoryPresenter(this);
         presenter.onStart();
         super.init();
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
     }
 
     @Override
@@ -68,6 +71,7 @@ public class CategoryActivity extends BaseActivity implements
 
     public void showCategories(List<Category> list) {
         recyclerView.setAdapter(new CategoryAdapter(list, this));
+        progressBar.setVisible(false);
         for (int i = 0; i < list.size(); i++) {
             Log.d(TAG, "category " + list.get(i));
         }
@@ -167,7 +171,7 @@ public class CategoryActivity extends BaseActivity implements
     @Override
     public void onLongClickItem(Object object) {
         Category category = (Category) object;
-        super.showDeleteDialog("Удалить запись " + category.getTitle());
+        super.showRemoveElementDialog("Удалить запись " + category.getTitle());
     }
 
     @Override
@@ -195,5 +199,6 @@ public class CategoryActivity extends BaseActivity implements
     @Override
     public void showError(String message) {
         super.showError(message);
+
     }
 }

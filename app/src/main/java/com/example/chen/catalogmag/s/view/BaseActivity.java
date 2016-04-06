@@ -1,6 +1,7 @@
 package com.example.chen.catalogmag.s.view;
 
 import android.content.DialogInterface;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -12,7 +13,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
 
 import com.example.chen.catalogmag.R;
 import com.example.chen.catalogmag.s.presenter.CategoryPresenter;
@@ -39,6 +43,7 @@ public abstract class BaseActivity extends AppCompatActivity implements ItemClic
 
     DrawerLayout drawer;
     NavigationView navigationView;
+    MenuItem progressBar;
 
     public BaseActivity() {
 
@@ -49,7 +54,9 @@ public abstract class BaseActivity extends AppCompatActivity implements ItemClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(getLayoutId());
+        setProgressBarIndeterminateVisibility(true);
         init();
     }
 
@@ -68,14 +75,21 @@ public abstract class BaseActivity extends AppCompatActivity implements ItemClic
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
+
+
         return true;
 
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        progressBar = menu.findItem(R.id.menu_progress_bar);
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -92,7 +106,7 @@ public abstract class BaseActivity extends AppCompatActivity implements ItemClic
         return false;
     }
 
-    void showDeleteDialog(String message) {
+    void showRemoveElementDialog(String message) {
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -114,7 +128,6 @@ public abstract class BaseActivity extends AppCompatActivity implements ItemClic
             }
         });
 
-
         AlertDialog dialog = builder.create();
         dialog.show();
     }
@@ -127,6 +140,7 @@ public abstract class BaseActivity extends AppCompatActivity implements ItemClic
 
     void showError(String message){
         Snackbar.make(drawer, message, Snackbar.LENGTH_LONG).show();
+        progressBar.setVisible(false);
     }
 
     abstract int getLayoutId();

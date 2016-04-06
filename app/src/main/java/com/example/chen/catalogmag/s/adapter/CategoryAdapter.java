@@ -2,7 +2,6 @@ package com.example.chen.catalogmag.s.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +40,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                                                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
-        view = inflater.inflate(R.layout.item_cateogry, parent, false);
+        view = inflater.inflate(R.layout.item_category, parent, false);
         final ViewHolder holder = new ViewHolder(view);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +84,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         @Bind(R.id.category)
         TextView category;
 
-        @Bind(R.id.position)
+        @Bind(R.id.category_position)
         TextView position;
 
         public ViewHolder(View itemView) {

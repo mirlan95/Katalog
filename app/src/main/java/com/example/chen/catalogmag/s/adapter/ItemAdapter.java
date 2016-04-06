@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.chen.catalogmag.R;
@@ -17,6 +18,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by chen on 04.04.16.
@@ -24,7 +26,7 @@ import butterknife.ButterKnife;
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     private static final String TAG = ItemAdapter.class.getSimpleName();
-    private List<Product> list = new ArrayList();
+    private static List<Product> list = new ArrayList();
     private LayoutInflater inflater;
     private View view;
     private ItemClickListener listener;
@@ -41,14 +43,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                                                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
-        view = inflater.inflate(R.layout.item_cateogry, parent, false);
+        view = inflater.inflate(R.layout.item_element, parent, false);
         final ViewHolder holder = new ViewHolder(view);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int adapterPos = holder.getAdapterPosition();
                 if (adapterPos != RecyclerView.NO_POSITION) {
-
                     listener.onCLickItem(list.get(adapterPos));
                 }
             }
@@ -60,7 +61,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
                 int adapterPos = holder.getAdapterPosition();
                 if (adapterPos != RecyclerView.NO_POSITION) {
-
                     listener.onLongClickItem(list.get(adapterPos));
                     return true;
                 }
@@ -72,7 +72,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.setData(list.get(position).getTitle(), position);
+        holder.setData(list.get(position), position);
     }
 
 
@@ -86,20 +86,30 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.category)
-        TextView category;
+        @Bind(R.id.item)
+        TextView item;
 
-        @Bind(R.id.position)
-        TextView position;
+        @Bind(R.id.price)
+        TextView price;
+
+        @Bind(R.id.description)
+        TextView description;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
-        public  void setData(String category, int position){
-            this.category.setText(category);
-            this.position.setText((position + 1) + "");
+        public  void setData(Product product, int position){
+            this.item.setText(product.getTitle());
+            this.price.setText(product.getPrice());
+            this.description.setText(product.getText());
+        }
+
+        @OnClick(R.id.item_image)
+        void onClickImage(View v){
+            Log.d(TAG, "itemView " + list.get(getAdapterPosition()).getTitle());
+
         }
     }
 

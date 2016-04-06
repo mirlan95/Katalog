@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_progress_bar"
+        android:orderInCategory="100"
+
+        android:icon="@drawable/ic_add_24dp"
+        android:title="Loading..."
+        app:actionLayout="@layout/progress_bar"
+        app:showAsAction="always" />
+
     <item
         android:id="@+id/add_category"
-        android:orderInCategory="100"
+        android:orderInCategory="120"
         android:icon="@drawable/ic_add_24dp"
         android:title="@string/add_category"
-        app:showAsAction="always" />
+
+        app:showAsAction="ifRoom" />
 </menu>

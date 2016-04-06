@@ -5,6 +5,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.Window;
 
 import com.example.chen.catalogmag.R;
 import com.example.chen.catalogmag.s.adapter.ItemAdapter;
@@ -68,10 +69,14 @@ public class ItemActivity extends BaseActivity implements NavigationView.OnNavig
                 Log.d(TAG, "nav_shops");
                 break;
 
-            case R.id.nav_start_items_activity:
-                Log.d(TAG, "nav_shops");
+            case R.id.nav_start_category_activity:
+                onBackPressed();
+                Log.d(TAG, "nav_category");
                 break;
 
+            case R.id.nav_add_item:
+                Log.d(TAG, "add item");
+                break;
         }
 
         drawer.closeDrawer(GravityCompat.START);
@@ -80,6 +85,7 @@ public class ItemActivity extends BaseActivity implements NavigationView.OnNavig
 
     public void onShow(List<Product> list) {
         recyclerView.setAdapter(new ItemAdapter(list, this));
+        progressBar.setVisible(false);
         for (int i = 0; i < list.size(); i++) {
             Log.d(TAG, "onShow " + list.get(i).toString());
         }
@@ -93,7 +99,7 @@ public class ItemActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void onLongClickItem(Object object) {
         Product product = (Product) object;
-        super.showDeleteDialog("Удалить запись " + product.getTitle());
+        super.showRemoveElementDialog("Удалить запись " + product.getTitle());
     }
 
     @Override
@@ -119,5 +125,6 @@ public class ItemActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void showError(String message) {
         super.showError(message);
+
     }
 }
