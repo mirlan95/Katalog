@@ -2,23 +2,15 @@ package com.example.chen.catalogmag.s.view;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -29,78 +21,43 @@ import com.example.chen.catalogmag.s.adapter.CategoryAdapter;
 import com.example.chen.catalogmag.s.model.Category;
 import com.example.chen.catalogmag.s.presenter.CategoryPresenter;
 import com.example.chen.catalogmag.s.utils.Constants;
-import com.example.chen.catalogmag.s.utils.DividerItemDecoration;
-import com.example.chen.catalogmag.s.utils.ItemClickListener;
 
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
-
-public class CategoryActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ItemClickListener {
+public class CategoryActivity extends BaseActivity implements
+        NavigationView.OnNavigationItemSelectedListener {
 
 
     private static final String TAG = CategoryActivity.class.getSimpleName();
     private CategoryPresenter presenter;
 
-    @Bind(R.id.recycler_list)
-    RecyclerView recyclerView;
+    public CategoryActivity() {
 
-    @Bind(R.id.root_category_view)
-    DrawerLayout drawer;
-
-    @Bind(R.id.toolbar)
-    android.support.v7.widget.Toolbar toolbar;
-
-    @Bind(R.id.nav_view)
-    NavigationView navigationView;
-
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_category);
-
-        init();
-    }
-
-    void init() {
-        ButterKnife.bind(this);
-        setTitle(R.string.title_category);
-        setSupportActionBar(toolbar);
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-
-        drawer.addDrawerListener(toggle);
-        toggle.setDrawerIndicatorEnabled(true);
-        toggle.syncState();
-        navigationView.setNavigationItemSelectedListener(this);
-
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-
-        presenter = new CategoryPresenter(this);
-        presenter.onStart();
+        Log.d(TAG, "onCreate");
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-
+    void init() {
+        setTitle(R.string.title_category);
+        presenter = new CategoryPresenter(this);
+        presenter.onStart();
+        super.init();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.add_category) {
             Snackbar.make(drawer, "Add Category ", Snackbar.LENGTH_LONG).show();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
-
 
     @Override
     protected void onStart() {
@@ -108,17 +65,12 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         Log.d(TAG, "onStart");
     }
 
+
     public void showCategories(List<Category> list) {
         recyclerView.setAdapter(new CategoryAdapter(list, this));
         for (int i = 0; i < list.size(); i++) {
             Log.d(TAG, "category " + list.get(i));
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ButterKnife.unbind(this);
     }
 
     @Override
@@ -132,7 +84,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
                 break;
 
             case R.id.nav_start_items_activity:
-                startActivity(new Intent(CategoryActivity.this, ItemListActivity.class));
+                startActivity(new Intent(CategoryActivity.this, ItemActivity.class));
                 break;
 
             case R.id.nav_add_category:
@@ -145,47 +97,6 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         return true;
     }
 
-    @Override
-    public void onCLickItem(Object object) {
-        Intent intent = new Intent(CategoryActivity.this, ItemListActivity.class);
-
-        intent.putExtra(Constants.CATEGORY, (Category) object);
-        startActivity(intent);
-    }
-
-    @Override
-    public void onLongClickItem(Object object) {
-        Log.d(TAG, object.toString());
-        showDeleteDialog();
-    }
-
-    void showDeleteDialog() {
-
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        builder.setMessage(R.string.msg)
-                .setTitle(R.string.dialog_title);
-
-        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Log.d(TAG, "OK");
-            }
-        });
-
-        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
     void showAddDialog() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -195,26 +106,26 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         final EditText editText = (EditText) dialogView.findViewById(R.id.new_category_value);
 
         builder.setView(dialogView)
-        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Log.d(TAG, "OK");
-            }
-        })
-        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d(TAG, "OK" + " value " + editText.getText().toString());
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
 
 
         AlertDialog dialog = builder.create();
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialog) {
-            final Button positiveButton = ((AlertDialog)dialog).getButton(DialogInterface.BUTTON_POSITIVE);
-                if(editText.length() == 0){
+                final Button positiveButton = ((AlertDialog) dialog).getButton(DialogInterface.BUTTON_POSITIVE);
+                if (editText.length() == 0) {
                     positiveButton.setEnabled(false);
                 }
                 editText.addTextChangedListener(new TextWatcher() {
@@ -225,11 +136,14 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
 
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        if(count > 3){
+                        if (count > 0) {
                             positiveButton.setEnabled(true);
                         } else {
                             positiveButton.setEnabled(false);
                         }
+//                        Log.d(TAG, "start " + start);
+//                        Log.d(TAG, "before " + before);
+//                        Log.d(TAG, "count  " + count);
                     }
 
                     @Override
@@ -240,5 +154,46 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
             }
         });
         dialog.show();
+    }
+
+    @Override
+    public void onCLickItem(Object object) {
+        Intent intent = new Intent(CategoryActivity.this, ItemActivity.class);
+
+        intent.putExtra(Constants.CATEGORY, (Category) object);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onLongClickItem(Object object) {
+        Category category = (Category) object;
+        super.showDeleteDialog("Удалить запись " + category.getTitle());
+    }
+
+    @Override
+    int getLayoutId() {
+        return R.layout.activity_category;
+    }
+
+    @Override
+    int getRootId() {
+        return R.id.root_category_view;
+    }
+
+    @Override
+    protected int getNavId() {
+        return R.id.nav_category_view;
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy();
+    }
+
+    @Override
+    public void showError(String message) {
+        super.showError(message);
     }
 }

@@ -11,8 +11,8 @@ import java.util.List;
  */
 public class CategoryPresenter extends Presenter {
 
-    CategoryActivity context;
-    CategoriesInteractor categoriesInterator;
+    private CategoryActivity context;
+    private CategoriesInteractor categoriesInterator;
 
 
     public CategoryPresenter(CategoryActivity context) {
@@ -27,7 +27,13 @@ public class CategoryPresenter extends Presenter {
     }
 
     public void onFinished(List<Category> list){
-        context.showCategories(list);
+        if(list.size() < 1){
+            context.showError("Ничего ненашли по категориям");
+        } else {
+            context.showCategories(list);
+        }
+
+
     }
 
     @Override
@@ -37,6 +43,7 @@ public class CategoryPresenter extends Presenter {
 
     @Override
     public void onDestroy() {
-
+        context = null;
+        categoriesInterator = null;
     }
 }
